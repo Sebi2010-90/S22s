@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Samsung Galaxy S22</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#030308;--surface:#0d0d14;--card:#12121c;--border:#1e1e2e;
+  --blue:#4A9EFF;--blue2:#8ab4ff;--purple:#a78bfa;--pink:#f9a8d4;
+  --green:#4ade80;--amber:#fbbf24;
+  --text:#e0e0f0;--muted:#666680;
+  --ff:'Syne',sans-serif;--fb:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden}
+#canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35}
+
+/* LANG SWITCHER */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1001;display:flex;justify-content:flex-end;padding:8px 48px;background:rgba(3,3,8,.95);border-bottom:1px solid var(--border)}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:var(--fb);font-size:.72rem;padding:5px 12px;border-radius:100px;cursor:pointer;transition:all .2s;letter-spacing:.06em;margin-left:6px}
+.lang-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.lang-btn:hover:not(.active){border-color:rgba(74,158,255,.4);color:var(--blue2)}
+
+/* NAV */
+nav{position:fixed;top:33px;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;backdrop-filter:blur(24px);background:rgba(3,3,8,.5);border-bottom:1px solid rgba(255,255,255,.04)}
+.nav-logo{font-family:var(--ff);font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:#fff}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 48px 60px;position:relative;z-index:1}
+.orb1{position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(74,158,255,.1) 0%,transparent 65%);pointer-events:none;animation:orb 8s ease-in-out infinite}
+.orb2{position:absolute;bottom:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(167,139,250,.07) 0%,transparent 65%);pointer-events:none;animation:orb 10s ease-in-out infinite reverse}
+@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--blue)}
+.hero-headline{font-family:var(--ff);font-size:clamp(52px,6vw,92px);font-weight:900;line-height:.92;color:#fff;letter-spacing:-.04em;margin-bottom:24px}
+.hero-headline .g{background:linear-gradient(135deg,var(--blue) 0%,var(--purple) 50%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--muted);font-size:.9rem;margin-bottom:28px;line-height:1.8}
+.price-box{display:inline-flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 24px;margin-bottom:32px;gap:4px}
+.price-from{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.price-val{font-family:var(--ff);font-size:2rem;font-weight:900;color:#fff;letter-spacing:-.04em}
+.price-val span{font-size:1rem;color:var(--blue);font-weight:700}
+.price-sub{font-size:.72rem;color:var(--muted)}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.chip{font-size:.7rem;padding:5px 12px;border:1px solid var(--border);border-radius:100px;color:var(--muted);background:var(--surface);letter-spacing:.05em;text-transform:uppercase}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;text-decoration:none;padding:13px 30px;border-radius:100px;font-size:.83rem;font-weight:500;letter-spacing:.04em;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;border:none;cursor:pointer;font-family:var(--fb)}
+.btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);pointer-events:none}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(74,158,255,.4)}
+.btn-s{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);color:var(--muted);text-decoration:none;padding:13px 30px;border-radius:100px;font-size:.83rem;font-weight:500;letter-spacing:.04em;transition:all .2s;background:rgba(255,255,255,.02);font-family:var(--fb);cursor:pointer}
+.btn-s:hover{border-color:rgba(74,158,255,.4);color:#fff;background:rgba(74,158,255,.07)}
+
+/* PHONE */
+.hero-right{display:flex;justify-content:center;align-items:center;position:relative}
+.glow-ring{position:absolute;width:300px;height:560px;border-radius:55px;border:1px solid rgba(74,158,255,.1);pointer-events:none;animation:rp 4s ease-in-out infinite}
+.glow-ring2{position:absolute;width:360px;height:620px;border-radius:65px;border:1px solid rgba(167,139,250,.06);pointer-events:none;animation:rp 4s ease-in-out infinite .6s}
+@keyframes rp{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.03)}}
+.phone-wrap{position:relative;animation:pf 6s ease-in-out infinite;cursor:default}
+@keyframes pf{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-18px) rotate(1.5deg)}}
+.phone{width:250px;height:520px;border-radius:48px;background:linear-gradient(160deg,#1c1c28,#0a0a12);border:1.5px solid rgba(255,255,255,.12);position:relative;box-shadow:0 80px 160px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.1),0 0 80px rgba(74,158,255,.07)}
+.phone-pill{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:95px;height:30px;background:#050510;border-radius:20px;z-index:2;border:1px solid rgba(255,255,255,.07)}
+.phone-pill::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:rgba(74,158,255,.25);box-shadow:0 0 8px rgba(74,158,255,.5)}
+.phone-screen{position:absolute;inset:14px;border-radius:36px;background:linear-gradient(160deg,#080f1e,#030508);overflow:hidden;display:flex;flex-direction:column}
+
+/* STATUS BAR */
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px;position:relative;z-index:2}
+.status-time{font-family:var(--ff);font-size:.75rem;font-weight:700;color:#fff}
+.status-icons{display:flex;gap:4px;align-items:center}
+.status-icons span{font-size:.55rem;color:rgba(255,255,255,.6)}
+
+/* WALLPAPER */
+.wallpaper{position:absolute;inset:0;background:linear-gradient(160deg,#06101e 0%,#020408 100%);overflow:hidden}
+.wp-glow{position:absolute;top:10%;left:50%;transform:translateX(-50%);width:200px;height:200px;background:radial-gradient(circle,rgba(74,158,255,.18) 0%,transparent 70%)}
+.wp-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(74,158,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(74,158,255,.025) 1px,transparent 1px);background-size:18px 18px}
+
+/* CLOCK ON SCREEN */
+.screen-clock{position:relative;text-align:center;padding:28px 0 16px;z-index:2}
+.sc-time{font-family:var(--ff);font-size:3rem;font-weight:900;color:#fff;letter-spacing:-.05em;text-shadow:0 0 40px rgba(74,158,255,.3)}
+.sc-date{font-size:.58rem;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+
+/* APP GRID */
+.app-grid{position:relative;z-index:2;padding:8px 14px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.app-icon{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s;-webkit-tap-highlight-color:transparent}
+.app-icon:active{transform:scale(.9)}
+.app-icon:hover .app-face{box-shadow:0 0 14px rgba(74,158,255,.5)}
+.app-face{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:transform .2s,box-shadow .2s;border:1px solid rgba(255,255,255,.07)}
+.app-label{font-size:.38rem;color:rgba(255,255,255,.5);text-align:center;max-width:46px;line-height:1.2;letter-spacing:.03em}
+.app-icon:hover .app-face{transform:scale(1.1)}
+
+/* APP COLORS */
+.app-camera{background:linear-gradient(135deg,#1a1a2e,#16213e)}
+.app-gallery{background:linear-gradient(135deg,#2d1b69,#11998e)}
+.app-phone{background:linear-gradient(135deg,#134e5e,#71b280)}
+.app-messages{background:linear-gradient(135deg,#4A9EFF,#2563eb)}
+.app-samsung{background:linear-gradient(135deg,#1428A0,#0ea5e9)}
+.app-spotify{background:linear-gradient(135deg,#1DB954,#191414)}
+.app-chrome{background:linear-gradient(135deg,#4285F4,#EA4335)}
+.app-settings{background:linear-gradient(135deg,#374151,#1f2937)}
+.app-maps{background:linear-gradient(135deg,#34A853,#4285F4)}
+.app-youtube{background:linear-gradient(135deg,#FF0000,#cc0000)}
+.app-instagram{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+.app-clock{background:linear-gradient(135deg,#0f0f1a,#1a1a2e)}
+
+/* DOCK */
+.phone-dock{position:relative;z-index:2;margin:auto 10px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;backdrop-filter:blur(10px)}
+
+.phone-side{position:absolute;right:-3px;top:130px;width:3px;height:60px;background:rgba(255,255,255,.1);border-radius:2px}
+.phone-vol1{position:absolute;left:-3px;top:110px;width:3px;height:36px;background:rgba(255,255,255,.1);border-radius:2px}
+.phone-vol2{position:absolute;left:-3px;top:158px;width:3px;height:36px;background:rgba(255,255,255,.1);border-radius:2px}
+
+/* APP MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:28px;max-width:480px;width:90%;max-height:80vh;overflow-y:auto;transform:scale(.9) translateY(20px);transition:transform .3s cubic-bezier(.22,1,.36,1);position:relative}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal-header{padding:28px 28px 0;display:flex;align-items:center;gap:16px;position:sticky;top:0;background:var(--card);border-radius:28px 28px 0 0;z-index:1;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.modal-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.modal-title-wrap{}
+.modal-title{font-family:var(--ff);font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.modal-sub{font-size:.78rem;color:var(--muted);margin-top:2px}
+.modal-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.07);border:none;color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.modal-body{padding:20px 28px 28px}
+.modal-body p{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.modal-features{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.modal-feat{display:flex;align-items:center;gap:12px;font-size:.84rem;color:var(--text)}
+.modal-feat .fi{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.15)}
+.modal-link{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:100px;padding:11px 24px;font-size:.82rem;font-weight:500;cursor:pointer;font-family:var(--fb);transition:all .2s;text-decoration:none;margin-top:8px}
+.modal-link:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(74,158,255,.4)}
+
+/* MARQUEE */
+.marquee-wrap{padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative;z-index:1;background:var(--surface)}
+.marquee-track{display:flex;white-space:nowrap;animation:mq 22s linear infinite}
+.mi{font-family:var(--ff);font-size:.9rem;font-weight:700;color:var(--border);text-transform:uppercase;letter-spacing:.1em;padding:0 36px}
+.mi.lit{color:var(--blue)}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+.section{padding:100px 0;position:relative;z-index:1}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 48px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.tag::before{content:'';display:block;width:20px;height:1px;background:var(--blue)}
+.section-title{font-family:var(--ff);font-size:clamp(30px,3.5vw,52px);font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:8px;line-height:1}
+.section-sub{color:var(--muted);font-size:.86rem;margin-bottom:52px}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .25s;position:relative;overflow:hidden}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:0;transition:opacity .3s}
+.price-card:hover::before{opacity:1}
+.price-card:hover{border-color:rgba(74,158,255,.25);transform:translateY(-4px)}
+.price-card.featured{border-color:rgba(74,158,255,.3);background:linear-gradient(135deg,#0f1626,var(--card))}
+.price-card.featured::before{opacity:1}
+.price-badge{display:inline-block;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(74,158,255,.15);color:var(--blue);border:1px solid rgba(74,158,255,.2);border-radius:100px;padding:3px 10px;margin-bottom:14px}
+.price-variant{font-family:var(--ff);font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.02em}
+.price-storage{font-size:.78rem;color:var(--muted);margin-bottom:18px}
+.price-amount{font-family:var(--ff);font-size:2.4rem;font-weight:900;color:#fff;letter-spacing:-.05em;margin-bottom:4px}
+.price-amount sup{font-size:1rem;font-weight:700;color:var(--blue);vertical-align:top;margin-top:6px;display:inline-block}
+.price-period{font-size:.75rem;color:var(--muted);margin-bottom:20px}
+.price-divider{height:1px;background:var(--border);margin-bottom:18px}
+.price-features{display:flex;flex-direction:column;gap:8px}
+.price-feature{font-size:.8rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.price-feature::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0}
+
+/* COLORS */
+.colors-section{background:var(--surface)}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-top:48px}
+.color-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;transition:all .25s;cursor:pointer}
+.color-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.15)}
+.color-swatch{width:56px;height:56px;border-radius:50%;margin:0 auto 12px;border:2px solid rgba(255,255,255,.1);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.color-name{font-family:var(--ff);font-size:.82rem;font-weight:700;color:#fff;margin-bottom:3px}
+.color-hex{font-size:.68rem;color:var(--muted);font-family:monospace}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;border:2px solid var(--border);border-radius:20px;overflow:hidden}
+.card{background:var(--card);cursor:pointer;transition:background .25s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,158,255,.04),transparent);transition:left .6s;pointer-events:none}
+.card:hover::before{left:140%}
+.card:hover{background:#141420}
+.card.open{background:linear-gradient(135deg,#0f1626,#12121c)}
+.card-top{display:flex;align-items:center;gap:14px;padding:24px 26px}
+.card-num{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--ff);font-size:.75rem;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .25s}
+.card.open .card-num{background:var(--blue);border-color:var(--blue);color:#fff}
+.card-title{font-family:var(--ff);font-size:.98rem;font-weight:700;color:#fff;flex:1;letter-spacing:-.02em}
+.card-arrow{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.8rem;transition:all .3s;flex-shrink:0}
+.card.open .card-arrow{transform:rotate(90deg);background:rgba(74,158,255,.12);border-color:rgba(74,158,255,.35);color:var(--blue)}
+.card-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.36,1)}
+.card.open .card-body{max-height:500px}
+.card-inner{padding:0 26px 26px}
+.cdivider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:18px}
+.card-inner p{font-size:.84rem;color:var(--muted);margin-bottom:16px;line-height:1.8}
+.spec-pills{display:flex;flex-wrap:wrap;gap:7px}
+.sp{font-size:.72rem;padding:4px 12px;border:1px solid var(--border);border-radius:100px;color:var(--text);background:rgba(255,255,255,.02)}
+.sp.b{border-color:rgba(74,158,255,.28);color:var(--blue);background:rgba(74,158,255,.07)}
+
+/* SPECS */
+.specs-bg{background:var(--surface)}
+.specs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.spec-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all .2s}
+.spec-box:hover{border-color:rgba(74,158,255,.2);transform:translateY(-3px)}
+.spec-box-title{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:.8rem}
+.spec-row:last-child{border-bottom:none}
+.spec-row span:first-child{color:var(--muted)}
+.spec-row span:last-child{color:var(--text);font-weight:500;text-align:right}
+
+/* CAM */
+.cam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.cam-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 20px 24px;text-align:center;transition:all .25s;position:relative;overflow:hidden}
+.cam-card:hover{border-color:rgba(74,158,255,.3);transform:translateY(-4px)}
+.lens{margin:0 auto 20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.lens-outer{border-radius:50%;background:radial-gradient(circle at 35% 35%,#1a1e30,#060810);border:2px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px rgba(74,158,255,.04),0 0 0 10px rgba(74,158,255,.02),0 10px 28px rgba(0,0,0,.5)}
+.lens-main-s{width:72px;height:72px}
+.lens-wide-s{width:84px;height:84px}
+.lens-tele-s{width:62px;height:62px}
+.lens-mid{border-radius:50%;background:radial-gradient(circle at 40% 40%,#0f1a2e,#030610);border:1px solid rgba(74,158,255,.12);display:flex;align-items:center;justify-content:center}
+.lens-main-s .lens-mid{width:44px;height:44px}
+.lens-wide-s .lens-mid{width:52px;height:52px}
+.lens-tele-s .lens-mid{width:36px;height:36px}
+.lens-dot{width:10px;height:10px;border-radius:50%;background:rgba(74,158,255,.45);box-shadow:0 0 10px rgba(74,158,255,.6)}
+.cam-card h3{font-family:var(--ff);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
+.cam-card p{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.cam-badge{display:inline-block;font-size:.68rem;color:var(--blue);background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.18);border-radius:100px;padding:3px 12px}
+.night-box{margin-top:24px;border:1px solid rgba(74,158,255,.14);border-radius:20px;padding:32px;background:linear-gradient(135deg,rgba(74,158,255,.05),rgba(167,139,250,.03));display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+.night-box h3{font-family:var(--ff);font-size:1.8rem;font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:8px}
+.night-box h3 span{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.night-box p{color:var(--muted);font-size:.85rem;line-height:1.7}
+.night-stats{display:flex;flex-direction:column;gap:12px}
+.ns{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:12px;padding:14px}
+.ns-val{font-family:var(--ff);font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:-.04em}
+.ns-val span{color:var(--blue)}
+.ns-label{font-size:.7rem;color:var(--muted);margin-top:2px}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:44px 0;position:relative;z-index:1}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--ff);font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em}
+.footer-note{font-size:.76rem;color:var(--muted)}
+
+/* FADE */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fd1{transition-delay:.08s}.fd2{transition-delay:.16s}.fd3{transition-delay:.24s}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation:shy 2.5s ease-in-out infinite}
+.scroll-hint span{font-size:.6rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+.scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--blue),transparent)}
+@keyframes shy{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:140px 20px 80px}
+  .hero-right{margin-top:52px}
+  .hero-chips,.hero-btns,.hero-eyebrow,.price-box{justify-content:center}
+  nav{padding:14px 20px;top:33px}
+  .lang-bar{padding:8px 16px}
+  .section-inner{padding:0 20px}
+  .cam-grid{grid-template-columns:1fr}
+  .night-box{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;gap:10px;text-align:center}
+}
+@media(max-width:600px){
+  .cards{grid-template-columns:1fr;border-radius:14px}
+  .specs-grid{grid-template-columns:1fr}
+  .color-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('de')">🇩🇪 DE</button>
+  <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('fr')">🇫🇷 FR</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+  <button class="lang-btn" onclick="setLang('tr')">🇹🇷 TR</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Galaxy S22</span>
+  <ul class="nav-links">
+    <li><a href="#highlights" data-t="nav_features">Features</a></li>
+    <li><a href="#pricing" data-t="nav_price">Preis</a></li>
+    <li><a href="#colors" data-t="nav_colors">Farben</a></li>
+    <li><a href="#specs" data-t="nav_specs">Specs</a></li>
+    <li><a href="#camera" data-t="nav_camera">Kamera</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="orb1"></div><div class="orb2"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-up" data-t="hero_eye">Samsung Galaxy S22</p>
+    <h1 class="hero-headline fade-up fd1">The<br>Icon.<br><span class="g" data-t="hero_reborn">Reborn.</span></h1>
+    <p class="hero-sub fade-up fd2" data-t="hero_sub">Das kompakteste Flaggschiff von Samsung. Neugeboren mit Contour-Cut-Design, 120 Hz AMOLED und professionellem Kamerasystem.</p>
+    <div class="price-box fade-up fd2">
+      <span class="price-from" data-t="price_from">Ab</span>
+      <span class="price-val"><sup>€</sup>649<span data-t="price_unit"> UVP</span></span>
+      <span class="price-sub" data-t="price_sub">128 GB · Offizieller Samsung Store</span>
+    </div>
+    <div class="hero-chips fade-up fd2">
+      <span class="chip">6,1″ AMOLED</span>
+      <span class="chip">50 MP</span>
+      <span class="chip">Snapdragon 8 Gen 1</span>
+      <span class="chip">5G</span>
+      <span class="chip">IP68</span>
+      <span class="chip">120Hz</span>
+    </div>
+    <div class="hero-btns fade-up fd3">
+      <a href="#pricing" class="btn-p" data-t="btn_buy">Jetzt kaufen →</a>
+      <a href="#highlights" class="btn-s" data-t="btn_discover">Entdecken</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="glow-ring"></div>
+    <div class="glow-ring2"></div>
+    <div class="phone-wrap" id="phoneWrap">
+      <div class="phone">
+        <div class="phone-pill"></div>
+        <div class="phone-screen">
+          <div class="wallpaper">
+            <div class="wp-glow"></div>
+            <div class="wp-grid"></div>
+          </div>
+          <div class="status-bar">
+            <span class="status-time">09:41</span>
+            <div class="status-icons">
+              <span>▐▐▐</span><span>WiFi</span><span>🔋</span>
+            </div>
+          </div>
+          <div class="screen-clock">
+            <div class="sc-time">09:41</div>
+            <div class="sc-date" data-t="phone_date">Di., 15. Februar</div>
+          </div>
+          <div class="app-grid" id="appGrid"></div>
+          <div style="flex:1"></div>
+          <div class="phone-dock" id="dockGrid"></div>
+        </div>
+        <div class="phone-side"></div>
+        <div class="phone-vol1"></div>
+        <div class="phone-vol2"></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span data-t="scroll">Scroll</span>
+  </div>
+</header>
+
+<!-- APP MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-icon" id="modalIcon"></div>
+      <div class="modal-title-wrap">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-sub" id="modalSubtitle"></div>
+      </div>
+    </div>
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-body">
+      <p id="modalDesc"></p>
+      <div class="modal-features" id="modalFeats"></div>
+      <a class="modal-link" id="modalLink" href="#" onclick="return false;" data-t="modal_more">Mehr erfahren ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- HIGHLIGHTS -->
+<section class="section" id="highlights">
+  <div class="section-inner">
+    <p class="tag fade-up" data-t="feat_tag">Was macht es besonders</p>
+    <h2 class="section-title fade-up" data-t="feat_title">Klick für Details.</h2>
+    <p class="section-sub fade-up" data-t="feat_sub">Jede Kachel aufklappen für Specs & Infos.</p>
+    <div class="cards" id="featCards"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section specs-bg" id="pricing">
+  <div class="section-inner">
+    <p class="tag fade-up" data-t="price_tag">Preise & Modelle</p>
+    <h2 class="section-title fade-up" data-t="price_title">Wähle dein Modell.</h2>
+    <p class="section-sub fade-up" data-t="price_sub">Galaxy S22 in zwei Speichervarianten.</p>
+    <div class="pricing-grid" id="pricingGrid"></div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section colors-section" id="colors">
+  <div class="section-inner">
+    <p class="tag fade-up" data-t="col_tag">Farben</p>
+    <h2 class="section-title fade-up" data-t="col_title">8 Farben zur Wahl.</h2>
+    <p class="section-sub fade-up" data-t="col_sub">Von klassisch bis mutig.</p>
+    <div class="color-grid" id="colorGrid"></div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="section" id="specs">
+  <div class="section-inner">
+    <p class="tag fade-up" data-t="spec_tag">Technische Daten</p>
+    <h2 class="section-title fade-up" data-t="spec_title">Alle Specs.</h2>
+    <p class="section-sub fade-up" data-t="spec_sub">Vollständige technische Übersicht.</p>
+    <div class="specs-grid" id="specsGrid"></div>
+  </div>
+</section>
+
+<!-- CAMERA -->
+<section class="section specs-bg" id="camera">
+  <div class="section-inner">
+    <p class="tag fade-up" data-t="cam_tag">Kamerasystem</p>
+    <h2 class="section-title fade-up" data-t="cam_title">Drei Linsen. Eine Vision.</h2>
+    <div class="cam-grid" id="camGrid"></div>
+    <div class="night-box fade-up">
+      <div>
+        <h3><span data-t="night_title">Nightography</span></h3>
+        <p data-t="night_desc">KI-gestützter Nachtmodus: Adaptive Pixel-Technologie kombiniert mehrere Belichtungen, reduziert Rauschen und verstärkt Details – auch bei völliger Dunkelheit.</p>
+      </div>
+      <div class="night-stats">
+        <div class="ns"><div class="ns-val">2.5<span>×</span></div><div class="ns-label" data-t="night_s1">mehr Licht als Vorgänger</div></div>
+        <div class="ns"><div class="ns-val">50<span> MP</span></div><div class="ns-label" data-t="night_s2">Hauptkamera Auflösung</div></div>
+        <div class="ns"><div class="ns-val">8<span>K</span></div><div class="ns-label" data-t="night_s3">max. Videoauflösung</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">Galaxy S22</span>
+    <span class="footer-note" data-t="footer">Inoffizielle Fan-Seite · Alle Angaben ohne Gewähr</span>
+  </div>
+</footer>
+
+<script>
+// ── TRANSLATIONS ──────────────────────────────────────────
+const T = {
+  de:{
+    nav_features:'Features',nav_price:'Preis',nav_colors:'Farben',nav_specs:'Specs',nav_camera:'Kamera',
+    hero_eye:'Samsung Galaxy S22',hero_reborn:'Reborn.',
+    hero_sub:'Das kompakteste Flaggschiff von Samsung. Neugeboren mit Contour-Cut-Design, 120 Hz AMOLED und professionellem Kamerasystem.',
+    price_from:'Ab',price_unit:' UVP',price_sub:'128 GB · Offizieller Samsung Store',
+    btn_buy:'Jetzt kaufen →',btn_discover:'Entdecken',
+    phone_date:'Di., 15. Februar',scroll:'Scroll',
+    modal_more:'Mehr erfahren ↗',
+    feat_tag:'Was macht es besonders',feat_title:'Klick für Details.',feat_sub:'Jede Kachel aufklappen für Specs & Infos.',
+    price_tag:'Preise & Modelle',price_title:'Wähle dein Modell.',price_sub:'Galaxy S22 in zwei Speichervarianten.',
+    col_tag:'Farben',col_title:'8 Farben zur Wahl.',col_sub:'Von klassisch bis mutig.',
+    spec_tag:'Technische Daten',spec_title:'Alle Specs.',spec_sub:'Vollständige technische Übersicht.',
+    cam_tag:'Kamerasystem',cam_title:'Drei Linsen. Eine Vision.',
+    night_title:'Nightography',night_desc:'KI-gestützter Nachtmodus: Adaptive Pixel-Technologie kombiniert mehrere Belichtungen, reduziert Rauschen und verstärkt Details – auch bei völliger Dunkelheit.',
+    night_s1:'mehr Licht als Vorgänger',night_s2:'Hauptkamera Auflösung',night_s3:'max. Videoauflösung',
+    footer:'Inoffizielle Fan-Seite · Alle Angaben ohne Gewähr'
+  },
+  en:{
+    nav_features:'Features',nav_price:'Price',nav_colors:'Colors',nav_specs:'Specs',nav_camera:'Camera',
+    hero_eye:'Samsung Galaxy S22',hero_reborn:'Reborn.',
+    hero_sub:'The most compact Samsung flagship. Reborn with Contour-Cut design, 120Hz AMOLED and pro-grade camera system.',
+    price_from:'From',price_unit:' RRP',price_sub:'128 GB · Official Samsung Store',
+    btn_buy:'Buy now →',btn_discover:'Discover',
+    phone_date:'Tue, Feb 15',scroll:'Scroll',
+    modal_more:'Learn more ↗',
+    feat_tag:'What makes it special',feat_title:'Click for details.',feat_sub:'Tap a card to reveal specs & info.',
+    price_tag:'Prices & Models',price_title:'Choose your model.',price_sub:'Galaxy S22 in two storage options.',
+    col_tag:'Colors',col_title:'8 colors to choose from.',col_sub:'From classic to bold.',
+    spec_tag:'Technical Data',spec_title:'All Specs.',spec_sub:'Complete technical overview.',
+    cam_tag:'Camera System',cam_title:'Three lenses. One vision.',
+    night_title:'Nightography',night_desc:'AI-powered night mode: Adaptive Pixel technology combines exposures, reduces noise and enhances detail – even in total darkness.',
+    night_s1:'more light vs predecessor',night_s2:'main camera resolution',night_s3:'max. video resolution',
+    footer:'Unofficial fan site · All information without guarantee'
+  },
+  fr:{
+    nav_features:'Fonctions',nav_price:'Prix',nav_colors:'Couleurs',nav_specs:'Specs',nav_camera:'Caméra',
+    hero_eye:'Samsung Galaxy S22',hero_reborn:'Réinventé.',
+    hero_sub:'Le flagship Samsung le plus compact. Réinventé avec le design Contour-Cut, AMOLED 120 Hz et un système photo professionnel.',
+    price_from:'À partir de',price_unit:' PDSF',price_sub:'128 Go · Boutique Samsung officielle',
+    btn_buy:'Acheter →',btn_discover:'Découvrir',
+    phone_date:'Mar, 15 févr.',scroll:'Défiler',
+    modal_more:'En savoir plus ↗',
+    feat_tag:'Ce qui le rend spécial',feat_title:'Cliquez pour les détails.',feat_sub:'Cliquez sur une tuile pour révéler les specs.',
+    price_tag:'Prix & Modèles',price_title:'Choisissez votre modèle.',price_sub:'Galaxy S22 en deux options de stockage.',
+    col_tag:'Couleurs',col_title:'8 couleurs au choix.',col_sub:'Du classique à l\'audacieux.',
+    spec_tag:'Données techniques',spec_title:'Toutes les specs.',spec_sub:'Aperçu technique complet.',
+    cam_tag:'Système photo',cam_title:'Trois objectifs. Une vision.',
+    night_title:'Nightography',night_desc:'Mode nuit IA : La technologie Adaptive Pixel combine les expositions, réduit le bruit et améliore les détails – même dans l\'obscurité totale.',
+    night_s1:'plus de lumière vs prédécesseur',night_s2:'résolution caméra principale',night_s3:'résolution vidéo max.',
+    footer:'Site fan non officiel · Informations sans garantie'
+  },
+  es:{
+    nav_features:'Funciones',nav_price:'Precio',nav_colors:'Colores',nav_specs:'Specs',nav_camera:'Cámara',
+    hero_eye:'Samsung Galaxy S22',hero_reborn:'Renacido.',
+    hero_sub:'El buque insignia más compacto de Samsung. Renacido con diseño Contour-Cut, AMOLED 120 Hz y sistema de cámara profesional.',
+    price_from:'Desde',price_unit:' PVP',price_sub:'128 GB · Tienda oficial Samsung',
+    btn_buy:'Comprar →',btn_discover:'Descubrir',
+    phone_date:'Mar, 15 feb.',scroll:'Desplazar',
+    modal_more:'Saber más ↗',
+    feat_tag:'Qué lo hace especial',feat_title:'Haz clic para detalles.',feat_sub:'Toca una tarjeta para ver specs e info.',
+    price_tag:'Precios y modelos',price_title:'Elige tu modelo.',price_sub:'Galaxy S22 en dos opciones de almacenamiento.',
+    col_tag:'Colores',col_title:'8 colores para elegir.',col_sub:'Desde clásico hasta atrevido.',
+    spec_tag:'Datos técnicos',spec_title:'Todas las specs.',spec_sub:'Descripción técnica completa.',
+    cam_tag:'Sistema de cámara',cam_title:'Tres lentes. Una visión.',
+    night_title:'Nightography',night_desc:'Modo nocturno IA: La tecnología Adaptive Pixel combina exposiciones, reduce ruido y mejora detalles – incluso en oscuridad total.',
+    night_s1:'más luz vs predecesor',night_s2:'resolución cámara principal',night_s3:'resolución de video máx.',
+    footer:'Sitio fan no oficial · Información sin garantía'
+  },
+  tr:{
+    nav_features:'Özellikler',nav_price:'Fiyat',nav_colors:'Renkler',nav_specs:'Teknik',nav_camera:'Kamera',
+    hero_eye:'Samsung Galaxy S22',hero_reborn:'Yeniden Doğdu.',
+    hero_sub:'Samsung\'ın en kompakt amiral gemisi. Contour-Cut tasarımı, 120 Hz AMOLED ve profesyonel kamera sistemiyle yeniden doğdu.',
+    price_from:'Başlangıç',price_unit:' MSRP',price_sub:'128 GB · Resmi Samsung Mağazası',
+    btn_buy:'Şimdi satın al →',btn_discover:'Keşfet',
+    phone_date:'Sal, 15 Şub.',scroll:'Kaydır',
+    modal_more:'Daha fazla ↗',
+    feat_tag:'Onu özel yapan nedir',feat_title:'Detaylar için tıkla.',feat_sub:'Spec\'leri görmek için kartlara tıklayın.',
+    price_tag:'Fiyatlar & Modeller',price_title:'Modelini seç.',price_sub:'Galaxy S22 iki depolama seçeneğinde.',
+    col_tag:'Renkler',col_title:'8 renk seçeneği.',col_sub:'Klasikten cesura.',
+    spec_tag:'Teknik Özellikler',spec_title:'Tüm Teknik Veriler.',spec_sub:'Eksiksiz teknik genel bakış.',
+    cam_tag:'Kamera Sistemi',cam_title:'Üç mercek. Bir vizyon.',
+    night_title:'Nightography',night_desc:'Yapay Zeka destekli gece modu: Adaptive Pixel teknolojisi pozlamaları birleştirir, gürültüyü azaltır ve ayrıntıları artırır – tam karanlıkta bile.',
+    night_s1:'öncekine göre daha fazla ışık',night_s2:'ana kamera çözünürlüğü',night_s3:'maks. video çözünürlüğü',
+    footer:'Resmi olmayan hayran sitesi · Bilgiler garanti edilmez'
+  }
+};
+
+// ── APP DATA ──────────────────────────────────────────────
+const APPS = {
+  de:[
+    {emoji:'📷',label:'Kamera',cls:'app-camera',title:'Kamera',sub:'ProVision · 50 MP',desc:'Das fortschrittlichste Kamerasystem auf einem Galaxy S. Mit Adaptive Pixel-Technologie und dem Nightography-Algorithmus liefert die 50 MP Hauptkamera beeindruckende Bilder bei Tag und Nacht.',feats:['50 MP Hauptkamera mit OIS','12 MP Ultraweitwinkel (120°)','10 MP Telefoto mit 3× optischem Zoom','8K Video bei 24 fps','Expert RAW App Support'],section:'camera'},
+    {emoji:'🖼️',label:'Galerie',cls:'app-gallery',title:'Galerie',sub:'Google Fotos · Integriert',desc:'Die Samsung Galerie bietet KI-gestützte Organisation, automatische Highlights und nahtlose Integration mit Google Fotos. Bearbeite Fotos direkt mit dem integrierten Editor.',feats:['KI-Bildorganisation','Remaster-Funktion','Story-Albums','RAW-Bearbeitung','Cloud-Backup'],section:'camera'},
+    {emoji:'📞',label:'Telefon',cls:'app-phone',title:'Telefon',sub:'One UI Dialer',desc:'Der Samsung Dialer mit integrierter Anrufer-ID, Spam-Schutz und Hintergrundgeräusch-Unterdrückung dank KI. Bixby beantwortet Anrufe für dich.',feats:['KI Anrufer-ID','Spam-Schutz','Hintergrundgeräusch-Unterdrückung','Bixby Anruf-Assistent','HD Voice & Video Calls'],section:'specs'},
+    {emoji:'💬',label:'Nachrichten',cls:'app-messages',title:'Samsung Messages',sub:'RCS & SMS',desc:'Samsung Messages mit RCS-Unterstützung für Hochauflösende Bilder, Lesebestätigungen und Gruppenreaktionen. Vollständig mit Google Messages kompatibel.',feats:['RCS Messaging','Hohe Bildqualität','Lesebestätigungen','Chat-Reaktionen','Ende-zu-Ende Verschlüsselung'],section:'highlights'},
+    {emoji:'🔵',label:'Samsung',cls:'app-samsung',title:'Samsung Pay',sub:'Bezahlen & Wallet',desc:'Bezahle überall kontaktlos mit Samsung Pay. Dank NFC und MST funktioniert Samsung Pay an fast allen Kassen – sogar an alten Terminals.',feats:['NFC & MST Support','Kartenverwaltung','Kreditkarten, Debitkarten','Treuekarten & Coupons','Sichere Knox-Umgebung'],section:'specs'},
+    {emoji:'🎵',label:'Spotify',cls:'app-spotify',title:'Spotify',sub:'Musik & Podcasts',desc:'Streame über 100 Millionen Songs und 5 Millionen Podcasts in höchster Qualität. Das Galaxy S22 liefert mit Dolby Atmos und dem Dual-Lautsprecher ein Premium-Klangerlebnis.',feats:['Hi-Fi Streaming','Dolby Atmos Support','Offline-Modus','Podcast-Library','Spatial Audio'],section:'highlights'},
+    {emoji:'🌐',label:'Chrome',cls:'app-chrome',title:'Chrome Browser',sub:'Google · Standard',desc:'Chrome auf dem Galaxy S22 nutzt die volle Leistung des Snapdragon 8 Gen 1. GPU Rasterization beschleunigt das Rendern von Webseiten für superschnelles Browsen.',feats:['GPU-beschleunigtes Rendering','Desktop-Modus','Tab-Gruppen','Passwort-Manager','Übersetzungsfunktion'],section:'specs'},
+    {emoji:'⚙️',label:'Einstellungen',cls:'app-settings',title:'Einstellungen',sub:'One UI 4.1',desc:'One UI 4.1 bietet ein völlig neu gestaltetes Einstellungsmenü mit verbesserter Bedienbarkeit, neuen Datenschutz-Features und dem Digital Wellbeing Dashboard.',feats:['Privacy Dashboard','Digital Wellbeing','Modes & Routines','Geräteintegrität','Bixby Routines'],section:'specs'},
+    {emoji:'🗺️',label:'Maps',cls:'app-maps',title:'Google Maps',sub:'Navigation & Karten',desc:'Google Maps mit Live-Traffic, AR-Navigation und detaillierten Gebäudeplänen. Das Samsung Galaxy S22 unterstützt präzises GPS-Tracking für verlässliche Navigation.',feats:['Live-Traffic Updates','AR-Straßenansicht','Indoor-Navigation','Öffentliche Verkehrsmittel','Offline-Karten'],section:'specs'},
+    {emoji:'▶️',label:'YouTube',cls:'app-youtube',title:'YouTube',sub:'Videos & Shorts',desc:'Genieße YouTube-Videos auf dem 6,1″ AMOLED-Display mit adaptiver 120-Hz-Bildrate und bis zu 1750 nit Helligkeit – selbst im Freien kristallklar.',feats:['4K HDR Wiedergabe','YouTube Premium','Shorts','Offline-Downloads','PiP-Modus'],section:'highlights'},
+    {emoji:'📸',label:'Instagram',cls:'app-instagram',title:'Instagram',sub:'Fotos & Reels',desc:'Teile deine Galaxy S22 Aufnahmen direkt auf Instagram. Die 50 MP Kamera liefert beeindruckende Details, die selbst nach der Komprimierung noch glänzen.',feats:['Reels & Stories','Shopping','Live Streaming','Professioneller Modus','Direkte Kamera-Integration'],section:'camera'},
+    {emoji:'🕐',label:'Uhr',cls:'app-clock',title:'Samsung Uhr',sub:'Alarm & Timer',desc:'Die Samsung Uhr mit Always-On-Display Integration, Sleep Coaching und dem Schlafmodus. Plane Alarme mit Bixby-Routinen für einen sanften Start in den Tag.',feats:['Always-On Display','Sleep Coaching','Bixby Routinen','Weltzeituhr','Fokus-Timer'],section:'highlights'},
+  ],
+  en:[
+    {emoji:'📷',label:'Camera',cls:'app-camera',title:'Camera',sub:'ProVision · 50 MP',desc:'The most advanced camera system on a Galaxy S. With Adaptive Pixel technology and the Nightography algorithm, the 50 MP main camera delivers impressive shots day and night.',feats:['50 MP main camera with OIS','12 MP ultrawide (120°)','10 MP telephoto with 3× optical zoom','8K video at 24 fps','Expert RAW App support'],section:'camera'},
+    {emoji:'🖼️',label:'Gallery',cls:'app-gallery',title:'Gallery',sub:'Google Photos · Built-in',desc:'Samsung Gallery offers AI-powered organization, automatic highlights and seamless Google Photos integration. Edit photos directly with the built-in editor.',feats:['AI image organization','Remaster function','Story albums','RAW editing','Cloud backup'],section:'camera'},
+    {emoji:'📞',label:'Phone',cls:'app-phone',title:'Phone',sub:'One UI Dialer',desc:'Samsung Dialer with integrated caller ID, spam protection and AI background noise cancellation. Bixby can answer calls for you.',feats:['AI Caller ID','Spam protection','Background noise suppression','Bixby Call Assistant','HD Voice & Video Calls'],section:'specs'},
+    {emoji:'💬',label:'Messages',cls:'app-messages',title:'Samsung Messages',sub:'RCS & SMS',desc:'Samsung Messages with RCS support for high-resolution images, read receipts and group reactions. Fully compatible with Google Messages.',feats:['RCS Messaging','High image quality','Read receipts','Chat reactions','End-to-end encryption'],section:'highlights'},
+    {emoji:'🔵',label:'Samsung',cls:'app-samsung',title:'Samsung Pay',sub:'Pay & Wallet',desc:'Pay contactlessly everywhere with Samsung Pay. Thanks to NFC and MST, Samsung Pay works at almost all checkout terminals – even old ones.',feats:['NFC & MST support','Card management','Credit & debit cards','Loyalty cards & coupons','Secure Knox environment'],section:'specs'},
+    {emoji:'🎵',label:'Spotify',cls:'app-spotify',title:'Spotify',sub:'Music & Podcasts',desc:'Stream over 100 million songs and 5 million podcasts in highest quality. The Galaxy S22 delivers a premium audio experience with Dolby Atmos and dual speakers.',feats:['Hi-Fi Streaming','Dolby Atmos support','Offline mode','Podcast library','Spatial Audio'],section:'highlights'},
+    {emoji:'🌐',label:'Chrome',cls:'app-chrome',title:'Chrome Browser',sub:'Google · Default',desc:'Chrome on the Galaxy S22 harnesses the full power of Snapdragon 8 Gen 1. GPU rasterization speeds up webpage rendering for super-fast browsing.',feats:['GPU-accelerated rendering','Desktop mode','Tab groups','Password manager','Translation feature'],section:'specs'},
+    {emoji:'⚙️',label:'Settings',cls:'app-settings',title:'Settings',sub:'One UI 4.1',desc:'One UI 4.1 features a completely redesigned settings menu with improved usability, new privacy features and the Digital Wellbeing Dashboard.',feats:['Privacy Dashboard','Digital Wellbeing','Modes & Routines','Device integrity','Bixby Routines'],section:'specs'},
+    {emoji:'🗺️',label:'Maps',cls:'app-maps',title:'Google Maps',sub:'Navigation & Maps',desc:'Google Maps with live traffic, AR navigation and detailed building plans. The Samsung Galaxy S22 supports precise GPS tracking for reliable navigation.',feats:['Live traffic updates','AR Street View','Indoor navigation','Public transport','Offline maps'],section:'specs'},
+    {emoji:'▶️',label:'YouTube',cls:'app-youtube',title:'YouTube',sub:'Videos & Shorts',desc:'Enjoy YouTube videos on the 6.1″ AMOLED display with adaptive 120 Hz refresh rate and up to 1750 nit brightness – crystal clear even outdoors.',feats:['4K HDR playback','YouTube Premium','Shorts','Offline downloads','PiP mode'],section:'highlights'},
+    {emoji:'📸',label:'Instagram',cls:'app-instagram',title:'Instagram',sub:'Photos & Reels',desc:'Share your Galaxy S22 shots directly on Instagram. The 50 MP camera delivers impressive details that shine even after compression.',feats:['Reels & Stories','Shopping','Live streaming','Professional mode','Direct camera integration'],section:'camera'},
+    {emoji:'🕐',label:'Clock',cls:'app-clock',title:'Samsung Clock',sub:'Alarm & Timer',desc:'Samsung Clock with Always-On Display integration, sleep coaching and sleep mode. Schedule alarms with Bixby Routines for a gentle start to the day.',feats:['Always-On Display','Sleep coaching','Bixby Routines','World clock','Focus timer'],section:'highlights'},
+  ],
+  fr:[
+    {emoji:'📷',label:'Caméra',cls:'app-camera',title:'Caméra',sub:'ProVision · 50 MP',desc:'Le système photo le plus avancé sur un Galaxy S. Avec la technologie Adaptive Pixel et l\'algorithme Nightography, l\'appareil principal 50 MP livre des clichés impressionnants jour et nuit.',feats:['Caméra principale 50 MP avec OIS','Ultra grand-angle 12 MP (120°)','Téléobjectif 10 MP 3× optique','Vidéo 8K à 24 fps','Support Expert RAW'],section:'camera'},
+    {emoji:'🖼️',label:'Galerie',cls:'app-gallery',title:'Galerie',sub:'Google Photos intégré',desc:'La Galerie Samsung propose une organisation IA, des moments forts automatiques et une intégration Google Photos. Éditez directement avec l\'éditeur intégré.',feats:['Organisation IA','Fonction Remaster','Albums Story','Édition RAW','Sauvegarde cloud'],section:'camera'},
+    {emoji:'📞',label:'Téléphone',cls:'app-phone',title:'Téléphone',sub:'Numéroteur One UI',desc:'Le numéroteur Samsung avec identification des appelants, protection anti-spam et suppression du bruit de fond IA. Bixby peut répondre aux appels.',feats:['ID appelant IA','Protection anti-spam','Suppression bruit fond','Assistant appel Bixby','Appels HD voix & vidéo'],section:'specs'},
+    {emoji:'💬',label:'Messages',cls:'app-messages',title:'Samsung Messages',sub:'RCS & SMS',desc:'Samsung Messages avec support RCS pour images haute résolution, accusés de lecture et réactions de groupe. Compatible Google Messages.',feats:['Messagerie RCS','Haute qualité image','Accusés de lecture','Réactions de chat','Chiffrement bout en bout'],section:'highlights'},
+    {emoji:'🔵',label:'Samsung',cls:'app-samsung',title:'Samsung Pay',sub:'Paiement & Wallet',desc:'Payez sans contact partout avec Samsung Pay. Grâce au NFC et MST, Samsung Pay fonctionne sur presque tous les terminaux.',feats:['Support NFC & MST','Gestion de cartes','Cartes crédit & débit','Cartes fidélité','Environnement Knox sécurisé'],section:'specs'},
+    {emoji:'🎵',label:'Spotify',cls:'app-spotify',title:'Spotify',sub:'Musique & Podcasts',desc:'Streamez plus de 100 millions de titres en qualité maximale. Le Galaxy S22 offre une expérience audio premium avec Dolby Atmos et double haut-parleur.',feats:['Streaming Hi-Fi','Support Dolby Atmos','Mode hors ligne','Bibliothèque podcasts','Audio spatial'],section:'highlights'},
+    {emoji:'🌐',label:'Chrome',cls:'app-chrome',title:'Navigateur Chrome',sub:'Google · Par défaut',desc:'Chrome sur Galaxy S22 exploite toute la puissance du Snapdragon 8 Gen 1. La rastérisation GPU accélère le rendu pour une navigation ultra-rapide.',feats:['Rendu accéléré GPU','Mode bureau','Groupes d\'onglets','Gestionnaire mots de passe','Traduction'],section:'specs'},
+    {emoji:'⚙️',label:'Paramètres',cls:'app-settings',title:'Paramètres',sub:'One UI 4.1',desc:'One UI 4.1 propose un menu repensé avec meilleure ergonomie, nouvelles fonctions confidentialité et tableau de bord Bien-être numérique.',feats:['Tableau confidentialité','Bien-être numérique','Modes & Routines','Intégrité appareil','Routines Bixby'],section:'specs'},
+    {emoji:'🗺️',label:'Maps',cls:'app-maps',title:'Google Maps',sub:'Navigation & Cartes',desc:'Google Maps avec trafic en direct, navigation AR et plans de bâtiments détaillés. Le Galaxy S22 supporte un GPS précis pour une navigation fiable.',feats:['Mises à jour trafic live','Vue AR','Navigation intérieure','Transports en commun','Cartes hors ligne'],section:'specs'},
+    {emoji:'▶️',label:'YouTube',cls:'app-youtube',title:'YouTube',sub:'Vidéos & Shorts',desc:'Profitez des vidéos YouTube sur l\'écran AMOLED 6,1″ à 120 Hz et jusqu\'à 1750 nit – cristallin même en plein soleil.',feats:['Lecture 4K HDR','YouTube Premium','Shorts','Téléchargements hors ligne','Mode PiP'],section:'highlights'},
+    {emoji:'📸',label:'Instagram',cls:'app-instagram',title:'Instagram',sub:'Photos & Reels',desc:'Partagez vos clichés Galaxy S22 directement sur Instagram. L\'appareil 50 MP livre des détails impressionnants même après compression.',feats:['Reels & Stories','Shopping','Live streaming','Mode professionnel','Intégration caméra directe'],section:'camera'},
+    {emoji:'🕐',label:'Horloge',cls:'app-clock',title:'Horloge Samsung',sub:'Alarme & Minuterie',desc:'L\'horloge Samsung avec Always-On Display, coaching sommeil et mode nuit. Planifiez des alarmes avec Bixby Routines pour un réveil en douceur.',feats:['Always-On Display','Coaching sommeil','Routines Bixby','Horloge mondiale','Minuteur focus'],section:'highlights'},
+  ],
+  es:[
+    {emoji:'📷',label:'Cámara',cls:'app-camera',title:'Cámara',sub:'ProVision · 50 MP',desc:'El sistema de cámara más avanzado en un Galaxy S. Con tecnología Adaptive Pixel y el algoritmo Nightography, la cámara principal de 50 MP entrega fotos impresionantes de día y de noche.',feats:['Cámara principal 50 MP con OIS','Gran angular 12 MP (120°)','Teleobjetivo 10 MP 3× óptico','Video 8K a 24 fps','Soporte Expert RAW'],section:'camera'},
+    {emoji:'🖼️',label:'Galería',cls:'app-gallery',title:'Galería',sub:'Google Fotos integrado',desc:'Samsung Gallery ofrece organización con IA, momentos destacados automáticos e integración con Google Fotos. Edita fotos directamente con el editor integrado.',feats:['Organización IA','Función Remaster','Álbumes Story','Edición RAW','Copia de seguridad en la nube'],section:'camera'},
+    {emoji:'📞',label:'Teléfono',cls:'app-phone',title:'Teléfono',sub:'Marcador One UI',desc:'El marcador Samsung con identificación de llamadas, protección contra spam y cancelación de ruido de fondo con IA. Bixby puede contestar llamadas por ti.',feats:['ID de llamadas IA','Protección spam','Supresión ruido de fondo','Asistente de llamadas Bixby','Llamadas HD voz y video'],section:'specs'},
+    {emoji:'💬',label:'Mensajes',cls:'app-messages',title:'Samsung Messages',sub:'RCS & SMS',desc:'Samsung Messages con soporte RCS para imágenes de alta resolución, confirmaciones de lectura y reacciones grupales. Totalmente compatible con Google Messages.',feats:['Mensajería RCS','Alta calidad de imagen','Confirmaciones de lectura','Reacciones de chat','Cifrado de extremo a extremo'],section:'highlights'},
+    {emoji:'🔵',label:'Samsung',cls:'app-samsung',title:'Samsung Pay',sub:'Pago & Wallet',desc:'Paga sin contacto en todas partes con Samsung Pay. Gracias a NFC y MST, Samsung Pay funciona en casi todos los terminales.',feats:['Soporte NFC & MST','Gestión de tarjetas','Tarjetas de crédito y débito','Tarjetas de fidelidad','Entorno Knox seguro'],section:'specs'},
+    {emoji:'🎵',label:'Spotify',cls:'app-spotify',title:'Spotify',sub:'Música & Podcasts',desc:'Reproduce más de 100 millones de canciones en la máxima calidad. El Galaxy S22 ofrece una experiencia de audio premium con Dolby Atmos y altavoces duales.',feats:['Streaming Hi-Fi','Soporte Dolby Atmos','Modo sin conexión','Biblioteca de podcasts','Audio espacial'],section:'highlights'},
+    {emoji:'🌐',label:'Chrome',cls:'app-chrome',title:'Navegador Chrome',sub:'Google · Predeterminado',desc:'Chrome en el Galaxy S22 aprovecha toda la potencia del Snapdragon 8 Gen 1. La rasterización GPU acelera la carga de páginas para una navegación ultrarrápida.',feats:['Renderizado acelerado GPU','Modo escritorio','Grupos de pestañas','Gestor de contraseñas','Función de traducción'],section:'specs'},
+    {emoji:'⚙️',label:'Ajustes',cls:'app-settings',title:'Ajustes',sub:'One UI 4.1',desc:'One UI 4.1 presenta un menú rediseñado con mejor usabilidad, nuevas funciones de privacidad y el panel de Bienestar digital.',feats:['Panel de privacidad','Bienestar digital','Modos y rutinas','Integridad del dispositivo','Rutinas Bixby'],section:'specs'},
+    {emoji:'🗺️',label:'Maps',cls:'app-maps',title:'Google Maps',sub:'Navegación & Mapas',desc:'Google Maps con tráfico en vivo, navegación AR y planos detallados. El Galaxy S22 admite seguimiento GPS preciso para una navegación confiable.',feats:['Actualizaciones de tráfico en vivo','Vista AR','Navegación interior','Transporte público','Mapas sin conexión'],section:'specs'},
+    {emoji:'▶️',label:'YouTube',cls:'app-youtube',title:'YouTube',sub:'Videos & Shorts',desc:'Disfruta de YouTube en la pantalla AMOLED de 6,1″ con 120 Hz adaptativo y hasta 1750 nits: cristalino incluso al aire libre.',feats:['Reproducción 4K HDR','YouTube Premium','Shorts','Descargas sin conexión','Modo PiP'],section:'highlights'},
+    {emoji:'📸',label:'Instagram',cls:'app-instagram',title:'Instagram',sub:'Fotos & Reels',desc:'Comparte tus fotos del Galaxy S22 directamente en Instagram. La cámara de 50 MP entrega detalles impresionantes que brillan incluso tras la compresión.',feats:['Reels & Stories','Shopping','Streaming en vivo','Modo profesional','Integración directa de cámara'],section:'camera'},
+    {emoji:'🕐',label:'Reloj',cls:'app-clock',title:'Reloj Samsung',sub:'Alarma & Temporizador',desc:'El reloj Samsung con integración Always-On Display, coaching de sueño y modo nocturno. Programa alarmas con Rutinas Bixby para un inicio suave del día.',feats:['Always-On Display','Coaching de sueño','Rutinas Bixby','Reloj mundial','Temporizador de enfoque'],section:'highlights'},
+  ],
+  tr:[
+    {emoji:'📷',label:'Kamera',cls:'app-camera',title:'Kamera',sub:'ProVision · 50 MP',desc:'Galaxy S üzerindeki en gelişmiş kamera sistemi. Adaptive Pixel teknolojisi ve Nightography algoritması ile 50 MP ana kamera gündüz ve gece etkileyici kareler sunar.',feats:['OIS\'li 50 MP ana kamera','12 MP ultra geniş açı (120°)','3× optik zum ile 10 MP telezoom','24 fps\'de 8K video','Expert RAW destek'],section:'camera'},
+    {emoji:'🖼️',label:'Galeri',cls:'app-gallery',title:'Galeri',sub:'Google Fotoğraflar entegre',desc:'Samsung Galeri, YZ destekli düzenleme, otomatik öne çıkanlar ve Google Fotoğraflar entegrasyonu sunar. Yerleşik editörle doğrudan düzenleyin.',feats:['YZ görsel organizasyonu','Yeniden Oluştur özelliği','Hikaye albümleri','RAW düzenleme','Bulut yedekleme'],section:'camera'},
+    {emoji:'📞',label:'Telefon',cls:'app-phone',title:'Telefon',sub:'One UI Çevirici',desc:'Entegre arayan kimliği, spam koruması ve YZ arka plan gürültü engelleme özellikli Samsung çevirici. Bixby aramalarınızı sizin için yanıtlayabilir.',feats:['YZ arayan kimliği','Spam koruması','Arka plan gürültü bastırma','Bixby Çağrı Asistanı','HD Ses & Video Çağrı'],section:'specs'},
+    {emoji:'💬',label:'Mesajlar',cls:'app-messages',title:'Samsung Mesajlar',sub:'RCS & SMS',desc:'Yüksek çözünürlüklü görseller, okundu bilgisi ve grup tepkileri için RCS destekli Samsung Mesajlar. Google Mesajlar ile tam uyumlu.',feats:['RCS Mesajlaşma','Yüksek görsel kalitesi','Okundu bildirimleri','Sohbet tepkileri','Uçtan uca şifreleme'],section:'highlights'},
+    {emoji:'🔵',label:'Samsung',cls:'app-samsung',title:'Samsung Pay',sub:'Ödeme & Cüzdan',desc:'Samsung Pay ile her yerde temassız ödeme yapın. NFC ve MST sayesinde neredeyse tüm ödeme terminallerinde çalışır.',feats:['NFC & MST desteği','Kart yönetimi','Kredi & banka kartları','Sadakat kartları','Güvenli Knox ortamı'],section:'specs'},
+    {emoji:'🎵',label:'Spotify',cls:'app-spotify',title:'Spotify',sub:'Müzik & Podcast',desc:'100 milyondan fazla şarkıyı ve 5 milyon podcastı en yüksek kalitede dinleyin. Galaxy S22, Dolby Atmos ve çift hoparlörle premium ses deneyimi sunar.',feats:['Hi-Fi Yayın','Dolby Atmos desteği','Çevrimdışı mod','Podcast kütüphanesi','Uzamsal Ses'],section:'highlights'},
+    {emoji:'🌐',label:'Chrome',cls:'app-chrome',title:'Chrome Tarayıcı',sub:'Google · Varsayılan',desc:'Galaxy S22\'deki Chrome, Snapdragon 8 Gen 1\'in tüm gücünden yararlanır. GPU rasterizasyonu sayfa oluşturmayı hızlandırarak süper hızlı gezinti sağlar.',feats:['GPU hızlandırmalı render','Masaüstü modu','Sekme grupları','Şifre yöneticisi','Çeviri özelliği'],section:'specs'},
+    {emoji:'⚙️',label:'Ayarlar',cls:'app-settings',title:'Ayarlar',sub:'One UI 4.1',desc:'One UI 4.1, geliştirilmiş kullanılabilirlik, yeni gizlilik özellikleri ve Dijital Denge panosu ile tamamen yeniden tasarlanmış bir ayarlar menüsü sunar.',feats:['Gizlilik panosu','Dijital Denge','Modlar & Rutinler','Cihaz bütünlüğü','Bixby Rutinleri'],section:'specs'},
+    {emoji:'🗺️',label:'Haritalar',cls:'app-maps',title:'Google Haritalar',sub:'Navigasyon & Haritalar',desc:'Canlı trafik, AR navigasyon ve detaylı bina planlarıyla Google Haritalar. Galaxy S22, güvenilir navigasyon için hassas GPS izlemeyi destekler.',feats:['Canlı trafik güncellemeleri','AR Sokak Görünümü','Bina içi navigasyon','Toplu taşıma','Çevrimdışı haritalar'],section:'specs'},
+    {emoji:'▶️',label:'YouTube',cls:'app-youtube',title:'YouTube',sub:'Videolar & Shorts',desc:'YouTube videolarını 120 Hz adaptif yenileme hızı ve 1750 nit\'e kadar parlaklıkta 6,1″ AMOLED ekranda izleyin – güneş ışığında bile kristal netliğinde.',feats:['4K HDR oynatma','YouTube Premium','Shorts','Çevrimdışı indirme','PiP modu'],section:'highlights'},
+    {emoji:'📸',label:'Instagram',cls:'app-instagram',title:'Instagram',sub:'Fotoğraf & Reels',desc:'Galaxy S22 fotoğraflarınızı doğrudan Instagram\'da paylaşın. 50 MP kamera, sıkıştırma sonrasında bile parlayan etkileyici ayrıntılar sunar.',feats:['Reels & Hikayeler','Alışveriş','Canlı yayın','Profesyonel mod','Doğrudan kamera entegrasyonu'],section:'camera'},
+    {emoji:'🕐',label:'Saat',cls:'app-clock',title:'Samsung Saat',sub:'Alarm & Zamanlayıcı',desc:'Always-On Display entegrasyonu, uyku koçluğu ve uyku modu ile Samsung Saat. Güne nazik bir başlangıç için Bixby Rutinleriyle alarm planlayın.',feats:['Always-On Display','Uyku koçluğu','Bixby Rutinleri','Dünya saati','Odak zamanlayıcı'],section:'highlights'},
+  ]
+};
+
+const FEAT_DATA = {
+  de:[
+    {n:'01',t:'Iconic Design',d:'Contour-Cut-Kameraarchitektur: Das Kameramodul fließt nahtlos in den Armor Aluminum Rahmen – ein skulpturales Objekt.',pills:['Armor Aluminum','Gorilla Glass Victus+','7,6 mm dünn','167 g','8 Farben']},
+    {n:'02',t:'Vision Booster Display',d:'1750 nit Spitzenhelligkeit – gestochen scharf auch in direktem Sonnenlicht. Adaptiv 1–120 Hz für flüssige Scrolls.',pills:['6,1″ AMOLED 2X','120 Hz adaptiv','1750 nit','425 ppi','Always-On']},
+    {n:'03',t:'Snapdragon 8 Gen 1',d:'4-nm-Prozessor – mehr Power bei weniger Verbrauch. Für Gaming, KI, 8K-Video. Der schnellste Chip 2022.',pills:['4 nm Prozess','8 GB LPDDR5','128/256 GB','UFS 3.1']},
+    {n:'04',t:'ProVision Kamera',d:'50 MP mit Adaptive Pixel: Vier Pixel werden zu einem für maximale Lichtausbeute. Nightography-KI macht Nacht zu Tag.',pills:['50 MP · f/1.8','12 MP Ultra Wide','10 MP Tele · 3×','8K Video','Expert RAW']},
+    {n:'05',t:'Akku & Laden',d:'3700 mAh – kabelgebunden, drahtlos, und sogar umgekehrt laden. Intelligentes Energiemanagement maximiert Laufzeit.',pills:['25W kabelgebunden','15W Wireless','4,5W Reverse','3700 mAh']},
+    {n:'06',t:'IP68 Schutz',d:'Bis zu 1,5 Meter tief und 30 Minuten unter Wasser. Das S22 hält widrigen Bedingungen stand.',pills:['IP68 Zertifiziert','1,5m / 30 min','Staub & Spritzwasser','Armor Aluminum']},
+  ],
+  en:[
+    {n:'01',t:'Iconic Design',d:'Contour-Cut camera architecture: the module flows seamlessly into the Armor Aluminum frame – a sculptural object.',pills:['Armor Aluminum','Gorilla Glass Victus+','7.6 mm thin','167 g','8 colors']},
+    {n:'02',t:'Vision Booster Display',d:'1750 nit peak brightness – crystal clear even in direct sunlight. Adaptive 1–120 Hz for smooth scrolling.',pills:['6.1″ AMOLED 2X','120 Hz adaptive','1750 nit','425 ppi','Always-On']},
+    {n:'03',t:'Snapdragon 8 Gen 1',d:'4nm processor – more power with less consumption. For gaming, AI, 8K video. Fastest chip of 2022.',pills:['4 nm process','8 GB LPDDR5','128/256 GB','UFS 3.1']},
+    {n:'04',t:'ProVision Camera',d:'50 MP with Adaptive Pixel: four pixels become one for maximum light capture. Nightography AI turns night into day.',pills:['50 MP · f/1.8','12 MP Ultra Wide','10 MP Tele · 3×','8K Video','Expert RAW']},
+    {n:'05',t:'Battery & Charging',d:'3700 mAh – wired, wireless, and even reverse charging. Smart energy management maximizes uptime.',pills:['25W wired','15W Wireless','4.5W Reverse','3700 mAh']},
+    {n:'06',t:'IP68 Protection',d:'Up to 1.5 meters deep and 30 minutes underwater. The S22 withstands harsh conditions.',pills:['IP68 Certified','1.5m / 30 min','Dust & Splash','Armor Aluminum']},
+  ],
+  fr:[
+    {n:'01',t:'Design Iconique',d:'Architecture caméra Contour-Cut : le module s\'intègre parfaitement dans le cadre Armor Aluminum.',pills:['Armor Aluminum','Gorilla Glass Victus+','7,6 mm fin','167 g','8 couleurs']},
+    {n:'02',t:'Vision Booster Display',d:'1750 nit de luminosité max – net même en plein soleil. Taux adaptatif 1–120 Hz.',pills:['6,1″ AMOLED 2X','120 Hz adaptatif','1750 nit','425 ppp','Always-On']},
+    {n:'03',t:'Snapdragon 8 Gen 1',d:'Processeur 4 nm – plus de puissance, moins de consommation. Pour le gaming, IA, vidéo 8K.',pills:['Process 4 nm','8 Go LPDDR5','128/256 Go','UFS 3.1']},
+    {n:'04',t:'Caméra ProVision',d:'50 MP Adaptive Pixel : quatre pixels fusionnés en un pour capter un maximum de lumière.',pills:['50 MP · f/1.8','12 MP Ultra Grand-Angle','10 MP Téléobjectif 3×','Vidéo 8K','Expert RAW']},
+    {n:'05',t:'Batterie & Charge',d:'3700 mAh – filaire, sans fil, et même à rebours. Gestion intelligente de l\'énergie.',pills:['25W filaire','15W Sans fil','4,5W Reverse','3700 mAh']},
+    {n:'06',t:'Protection IP68',d:'Jusqu\'à 1,5 m de profondeur et 30 min sous l\'eau. Le S22 résiste aux conditions difficiles.',pills:['Certifié IP68','1,5m / 30 min','Poussière & Projections','Armor Aluminum']},
+  ],
+  es:[
+    {n:'01',t:'Diseño Icónico',d:'Arquitectura Contour-Cut: el módulo fluye perfectamente en el marco de Armor Aluminum.',pills:['Armor Aluminum','Gorilla Glass Victus+','7,6 mm de grosor','167 g','8 colores']},
+    {n:'02',t:'Vision Booster Display',d:'1750 nits de brillo máximo – nítido incluso bajo luz solar directa. Tasa adaptativa 1–120 Hz.',pills:['6,1″ AMOLED 2X','120 Hz adaptativo','1750 nit','425 ppi','Always-On']},
+    {n:'03',t:'Snapdragon 8 Gen 1',d:'Procesador de 4 nm – más potencia con menos consumo. Para gaming, IA y video 8K.',pills:['Proceso 4 nm','8 GB LPDDR5','128/256 GB','UFS 3.1']},
+    {n:'04',t:'Cámara ProVision',d:'50 MP Adaptive Pixel: cuatro píxeles se fusionan en uno para captar la máxima luz.',pills:['50 MP · f/1.8','12 MP Ultra Gran Angular','10 MP Teleobjetivo 3×','Video 8K','Expert RAW']},
+    {n:'05',t:'Batería & Carga',d:'3700 mAh – carga por cable, inalámbrica e incluso inversa. Gestión inteligente de energía.',pills:['25W cable','15W Inalámbrico','4,5W Inverso','3700 mAh']},
+    {n:'06',t:'Protección IP68',d:'Hasta 1,5 m de profundidad y 30 min bajo el agua. El S22 resiste condiciones adversas.',pills:['Certificado IP68','1,5m / 30 min','Polvo & Salpicaduras','Armor Aluminum']},
+  ],
+  tr:[
+    {n:'01',t:'İkonik Tasarım',d:'Contour-Cut kamera mimarisi: modül Armor Alüminyum çerçeveyle sorunsuzca bütünleşiyor.',pills:['Armor Alüminyum','Gorilla Glass Victus+','7,6 mm ince','167 g','8 renk']},
+    {n:'02',t:'Vision Booster Ekran',d:'1750 nit tepe parlaklığı – doğrudan güneş ışığında bile kristal net. Adaptif 1–120 Hz.',pills:['6,1″ AMOLED 2X','120 Hz adaptif','1750 nit','425 ppi','Always-On']},
+    {n:'03',t:'Snapdragon 8 Gen 1',d:'4 nm işlemci – daha az güç tüketimiyle daha fazla performans. Oyun, YZ, 8K video.',pills:['4 nm üretim','8 GB LPDDR5','128/256 GB','UFS 3.1']},
+    {n:'04',t:'ProVision Kamera',d:'50 MP Adaptive Pixel: maksimum ışık için dört piksel birleşiyor. Nightography YZ geceyi gündüze çeviriyor.',pills:['50 MP · f/1.8','12 MP Geniş Açı','10 MP Telezoom · 3×','8K Video','Expert RAW']},
+    {n:'05',t:'Pil & Şarj',d:'3700 mAh – kablolu, kablosuz ve hatta ters şarj. Akıllı enerji yönetimi çalışma süresini artırır.',pills:['25W kablolu','15W Kablosuz','4,5W Ters Şarj','3700 mAh']},
+    {n:'06',t:'IP68 Koruma',d:'1,5 m derinliğe kadar 30 dakika su altında. S22 zorlu koşullara dayanır.',pills:['IP68 Sertifikalı','1,5m / 30 dk','Toz & Su Sıçraması','Armor Alüminyum']},
+  ]
+};
+
+const PRICES = {
+  de:[
+    {badge:'Standard',variant:'Galaxy S22',storage:'128 GB',price:'649',period:'Unverbindliche Preisempfehlung',featured:false,features:['128 GB UFS 3.1 Speicher','8 GB LPDDR5 RAM','Alle Farben verfügbar','Android 12 · One UI 4.1','4 Jahre OS-Updates']},
+    {badge:'Beliebt',variant:'Galaxy S22',storage:'256 GB',price:'709',period:'Unverbindliche Preisempfehlung',featured:true,features:['256 GB UFS 3.1 Speicher','8 GB LPDDR5 RAM','Alle Farben verfügbar','Android 12 · One UI 4.1','4 Jahre OS-Updates']},
+    {badge:'Gebraucht',variant:'Galaxy S22',storage:'128 GB',price:'289',period:'Durchschnittlicher Gebrauchtpreis',featured:false,features:['Zertifiziert generalüberholt','Hervorragend Zustand','12 Monate Garantie','Kostenlose Lieferung','Rückgabe 30 Tage']},
+  ],
+  en:[
+    {badge:'Standard',variant:'Galaxy S22',storage:'128 GB',price:'649',period:'Recommended retail price',featured:false,features:['128 GB UFS 3.1 storage','8 GB LPDDR5 RAM','All colors available','Android 12 · One UI 4.1','4 years OS updates']},
+    {badge:'Popular',variant:'Galaxy S22',storage:'256 GB',price:'709',period:'Recommended retail price',featured:true,features:['256 GB UFS 3.1 storage','8 GB LPDDR5 RAM','All colors available','Android 12 · One UI 4.1','4 years OS updates']},
+    {badge:'Used',variant:'Galaxy S22',storage:'128 GB',price:'289',period:'Average used price',featured:false,features:['Certified refurbished','Excellent condition','12 month warranty','Free shipping','30-day returns']},
+  ],
+  fr:[
+    {badge:'Standard',variant:'Galaxy S22',storage:'128 Go',price:'649',period:'Prix conseillé',featured:false,features:['128 Go UFS 3.1','8 Go LPDDR5 RAM','Toutes couleurs dispo','Android 12 · One UI 4.1','4 ans mises à jour OS']},
+    {badge:'Populaire',variant:'Galaxy S22',storage:'256 Go',price:'709',period:'Prix conseillé',featured:true,features:['256 Go UFS 3.1','8 Go LPDDR5 RAM','Toutes couleurs dispo','Android 12 · One UI 4.1','4 ans mises à jour OS']},
+    {badge:'Occasion',variant:'Galaxy S22',storage:'128 Go',price:'289',period:'Prix occasion moyen',featured:false,features:['Reconditionné certifié','État excellent','Garantie 12 mois','Livraison gratuite','Retour 30 jours']},
+  ],
+  es:[
+    {badge:'Estándar',variant:'Galaxy S22',storage:'128 GB',price:'649',period:'Precio de venta recomendado',featured:false,features:['128 GB UFS 3.1','8 GB LPDDR5 RAM','Todos los colores disponibles','Android 12 · One UI 4.1','4 años actualizaciones OS']},
+    {badge:'Popular',variant:'Galaxy S22',storage:'256 GB',price:'709',period:'Precio de venta recomendado',featured:true,features:['256 GB UFS 3.1','8 GB LPDDR5 RAM','Todos los colores disponibles','Android 12 · One UI 4.1','4 años actualizaciones OS']},
+    {badge:'Reacondicionado',variant:'Galaxy S22',storage:'128 GB',price:'289',period:'Precio promedio de segunda mano',featured:false,features:['Reacondicionado certificado','Estado excelente','Garantía 12 meses','Envío gratuito','Devolución 30 días']},
+  ],
+  tr:[
+    {badge:'Standart',variant:'Galaxy S22',storage:'128 GB',price:'649',period:'Tavsiye edilen satış fiyatı',featured:false,features:['128 GB UFS 3.1 depolama','8 GB LPDDR5 RAM','Tüm renkler mevcut','Android 12 · One UI 4.1','4 yıl OS güncellemesi']},
+    {badge:'Popüler',variant:'Galaxy S22',storage:'256 GB',price:'709',period:'Tavsiye edilen satış fiyatı',featured:true,features:['256 GB UFS 3.1 depolama','8 GB LPDDR5 RAM','Tüm renkler mevcut','Android 12 · One UI 4.1','4 yıl OS güncellemesi']},
+    {badge:'İkinci El',variant:'Galaxy S22',storage:'128 GB',price:'289',period:'Ortalama ikinci el fiyatı',featured:false,features:['Sertifikalı yenilenmiş','Mükemmel durum','12 ay garanti','Ücretsiz kargo','30 gün iade']},
+  ]
+};
+
+const COLORS_DATA = [
+  {name:{de:'Phantom Black',en:'Phantom Black',fr:'Noir Phantom',es:'Negro Phantom',tr:'Phantom Siyah'},hex:'#1C1C1E',color:'#1C1C1E'},
+  {name:{de:'Phantom White',en:'Phantom White',fr:'Blanc Phantom',es:'Blanco Phantom',tr:'Phantom Beyaz'},hex:'#F5F5F0',color:'#F0EFE9'},
+  {name:{de:'Green',en:'Green',fr:'Vert',es:'Verde',tr:'Yeşil'},hex:'#2D4A3E',color:'#3D6B58'},
+  {name:{de:'Pink Gold',en:'Pink Gold',fr:'Or Rose',es:'Oro Rosa',tr:'Pembe Altın'},hex:'#D4A0A0',color:'#C9847F'},
+  {name:{de:'Graphite',en:'Graphite',fr:'Graphite',es:'Grafito',tr:'Grafit'},hex:'#4A4A52',color:'#5A5A65'},
+  {name:{de:'Sky Blue',en:'Sky Blue',fr:'Bleu Ciel',es:'Azul Cielo',tr:'Gökyüzü Mavisi'},hex:'#87CEEB',color:'#6BB8D4'},
+  {name:{de:'Violet',en:'Violet',fr:'Violet',es:'Violeta',tr:'Mor'},hex:'#8B6FB5',color:'#7B5EA7'},
+  {name:{de:'Cream',en:'Cream',fr:'Crème',es:'Crema',tr:'Krem'},hex:'#F5E6C8',color:'#EDD9A3'},
+];
+
+const SPECS_DATA = {
+  de:[
+    {t:'Display',rows:[['Typ','Dynamic AMOLED 2X'],['Größe','6,1″'],['Auflösung','2340 × 1080 (FHD+)'],['Refresh Rate','1–120 Hz adaptiv'],['Helligkeit','1750 nit peak'],['Always-On','Ja']]},
+    {t:'Kamera',rows:[['Haupt','50 MP f/1.8 OIS'],['Ultra Wide','12 MP f/2.2 120°'],['Telefoto','10 MP f/2.4 3× opt.'],['Front','10 MP f/2.2'],['Video','8K@24fps, 4K@60fps'],['Space Zoom','30×']]},
+    {t:'Prozessor',rows:[['Chip','Snapdragon 8 Gen 1'],['Fertigung','4 nm'],['RAM','8 GB LPDDR5'],['Speicher','128 / 256 GB'],['Flash','UFS 3.1'],['OS','Android 12 · One UI 4.1']]},
+    {t:'Akku',rows:[['Kapazität','3700 mAh'],['Kabel','25W'],['Wireless','15W'],['Reverse','4,5W'],['Netzteil','Nicht inklusive']]},
+    {t:'Gehäuse',rows:[['Maße','146 × 70,6 × 7,6 mm'],['Gewicht','167 g'],['Schutz','IP68'],['Rahmen','Armor Aluminum'],['Glas','Gorilla Glass Victus+']]},
+    {t:'Konnektivität',rows:[['5G','Sub-6 + mmWave'],['Wi-Fi','Wi-Fi 6E'],['Bluetooth','5.2'],['UWB','Ja'],['NFC','Ja'],['USB','USB-C 3.2 Gen 1']]},
+  ],
+  en:[
+    {t:'Display',rows:[['Type','Dynamic AMOLED 2X'],['Size','6.1″'],['Resolution','2340 × 1080 (FHD+)'],['Refresh Rate','1–120 Hz adaptive'],['Brightness','1750 nit peak'],['Always-On','Yes']]},
+    {t:'Camera',rows:[['Main','50 MP f/1.8 OIS'],['Ultra Wide','12 MP f/2.2 120°'],['Telephoto','10 MP f/2.4 3× opt.'],['Front','10 MP f/2.2'],['Video','8K@24fps, 4K@60fps'],['Space Zoom','30×']]},
+    {t:'Processor',rows:[['Chip','Snapdragon 8 Gen 1'],['Process','4 nm'],['RAM','8 GB LPDDR5'],['Storage','128 / 256 GB'],['Flash','UFS 3.1'],['OS','Android 12 · One UI 4.1']]},
+    {t:'Battery',rows:[['Capacity','3700 mAh'],['Wired','25W'],['Wireless','15W'],['Reverse','4.5W'],['Charger','Not included']]},
+    {t:'Build',rows:[['Dimensions','146 × 70.6 × 7.6 mm'],['Weight','167 g'],['Protection','IP68'],['Frame','Armor Aluminum'],['Glass','Gorilla Glass Victus+']]},
+    {t:'Connectivity',rows:[['5G','Sub-6 + mmWave'],['Wi-Fi','Wi-Fi 6E'],['Bluetooth','5.2'],['UWB','Yes'],['NFC','Yes'],['USB','USB-C 3.2 Gen 1']]},
+  ],
+  fr:[
+    {t:'Écran',rows:[['Type','Dynamic AMOLED 2X'],['Taille','6,1″'],['Résolution','2340 × 1080 (FHD+)'],['Taux de rafraîch.','1–120 Hz adaptatif'],['Luminosité','1750 nit max'],['Always-On','Oui']]},
+    {t:'Caméra',rows:[['Principale','50 MP f/1.8 OIS'],['Ultra Grand-Angle','12 MP f/2.2 120°'],['Téléobjectif','10 MP f/2.4 3× opt.'],['Frontale','10 MP f/2.2'],['Vidéo','8K@24fps, 4K@60fps'],['Space Zoom','30×']]},
+    {t:'Processeur',rows:[['Puce','Snapdragon 8 Gen 1'],['Gravure','4 nm'],['RAM','8 Go LPDDR5'],['Stockage','128 / 256 Go'],['Flash','UFS 3.1'],['OS','Android 12 · One UI 4.1']]},
+    {t:'Batterie',rows:[['Capacité','3700 mAh'],['Filaire','25W'],['Sans fil','15W'],['Inversé','4,5W'],['Chargeur','Non inclus']]},
+    {t:'Boîtier',rows:[['Dimensions','146 × 70,6 × 7,6 mm'],['Poids','167 g'],['Protection','IP68'],['Cadre','Armor Aluminum'],['Verre','Gorilla Glass Victus+']]},
+    {t:'Connectivité',rows:[['5G','Sub-6 + mmWave'],['Wi-Fi','Wi-Fi 6E'],['Bluetooth','5.2'],['UWB','Oui'],['NFC','Oui'],['USB','USB-C 3.2 Gen 1']]},
+  ],
+  es:[
+    {t:'Pantalla',rows:[['Tipo','Dynamic AMOLED 2X'],['Tamaño','6,1″'],['Resolución','2340 × 1080 (FHD+)'],['Tasa refresco','1–120 Hz adaptativo'],['Brillo','1750 nit máx'],['Always-On','Sí']]},
+    {t:'Cámara',rows:[['Principal','50 MP f/1.8 OIS'],['Ultra Gran Angular','12 MP f/2.2 120°'],['Teleobjetivo','10 MP f/2.4 3× opt.'],['Frontal','10 MP f/2.2'],['Video','8K@24fps, 4K@60fps'],['Space Zoom','30×']]},
+    {t:'Procesador',rows:[['Chip','Snapdragon 8 Gen 1'],['Proceso','4 nm'],['RAM','8 GB LPDDR5'],['Almacenamiento','128 / 256 GB'],['Flash','UFS 3.1'],['OS','Android 12 · One UI 4.1']]},
+    {t:'Batería',rows:[['Capacidad','3700 mAh'],['Cable','25W'],['Inalámbrico','15W'],['Inverso','4,5W'],['Cargador','No incluido']]},
+    {t:'Cuerpo',rows:[['Dimensiones','146 × 70,6 × 7,6 mm'],['Peso','167 g'],['Protección','IP68'],['Marco','Armor Aluminum'],['Vidrio','Gorilla Glass Victus+']]},
+    {t:'Conectividad',rows:[['5G','Sub-6 + mmWave'],['Wi-Fi','Wi-Fi 6E'],['Bluetooth','5.2'],['UWB','Sí'],['NFC','Sí'],['USB','USB-C 3.2 Gen 1']]},
+  ],
+  tr:[
+    {t:'Ekran',rows:[['Tür','Dynamic AMOLED 2X'],['Boyut','6,1″'],['Çözünürlük','2340 × 1080 (FHD+)'],['Yenileme Hızı','1–120 Hz adaptif'],['Parlaklık','1750 nit tepe'],['Always-On','Evet']]},
+    {t:'Kamera',rows:[['Ana','50 MP f/1.8 OIS'],['Ultra Geniş','12 MP f/2.2 120°'],['Telezoom','10 MP f/2.4 3× opt.'],['Ön','10 MP f/2.2'],['Video','8K@24fps, 4K@60fps'],['Space Zoom','30×']]},
+    {t:'İşlemci',rows:[['Chip','Snapdragon 8 Gen 1'],['Üretim','4 nm'],['RAM','8 GB LPDDR5'],['Depolama','128 / 256 GB'],['Flash','UFS 3.1'],['OS','Android 12 · One UI 4.1']]},
+    {t:'Pil',rows:[['Kapasite','3700 mAh'],['Kablolu','25W'],['Kablosuz','15W'],['Ters Şarj','4,5W'],['Şarj Adaptörü','Dahil değil']]},
+    {t:'Gövde',rows:[['Boyutlar','146 × 70,6 × 7,6 mm'],['Ağırlık','167 g'],['Koruma','IP68'],['Çerçeve','Armor Alüminyum'],['Cam','Gorilla Glass Victus+']]},
+    {t:'Bağlantı',rows:[['5G','Sub-6 + mmWave'],['Wi-Fi','Wi-Fi 6E'],['Bluetooth','5.2'],['UWB','Evet'],['NFC','Evet'],['USB','USB-C 3.2 Gen 1']]},
+  ]
+};
+
+const CAM_DATA = {
+  de:[
+    {cls:'lens-main-s',title:'50 MP Hauptkamera',desc:'Adaptive Pixel fusioniert vier Pixel zu einem für maximale Lichtaufnahme auch bei Nacht.',badge:'f/1.8 · OIS · PDAF'},
+    {cls:'lens-wide-s',title:'12 MP Ultraweitwinkel',desc:'120° Sichtfeld – mehr Kontext, mehr Kreativität. Für Architektur, Landschaft und Gruppenfotos.',badge:'f/2.2 · 120°'},
+    {cls:'lens-tele-s',title:'10 MP Telefoto',desc:'3-facher optischer Zoom, Space Zoom bis 30×. Immer nah dran – ohne Qualitätsverlust.',badge:'f/2.4 · 3× opt. · OIS'},
+  ],
+  en:[
+    {cls:'lens-main-s',title:'50 MP Main Camera',desc:'Adaptive Pixel fuses four pixels into one for maximum light capture even at night.',badge:'f/1.8 · OIS · PDAF'},
+    {cls:'lens-wide-s',title:'12 MP Ultrawide',desc:'120° field of view – more context, more creativity. Perfect for architecture and group shots.',badge:'f/2.2 · 120°'},
+    {cls:'lens-tele-s',title:'10 MP Telephoto',desc:'3× optical zoom, Space Zoom up to 30×. Always close – without quality loss.',badge:'f/2.4 · 3× opt. · OIS'},
+  ],
+  fr:[
+    {cls:'lens-main-s',title:'Caméra principale 50 MP',desc:'Adaptive Pixel fusionne quatre pixels en un pour capter un maximum de lumière.',badge:'f/1.8 · OIS · PDAF'},
+    {cls:'lens-wide-s',title:'Ultra grand-angle 12 MP',desc:'Champ de vision 120° – plus de contexte, plus de créativité.',badge:'f/2.2 · 120°'},
+    {cls:'lens-tele-s',title:'Téléobjectif 10 MP',desc:'Zoom optique 3×, Space Zoom jusqu\'à 30×. Toujours proche – sans perte de qualité.',badge:'f/2.4 · 3× opt. · OIS'},
+  ],
+  es:[
+    {cls:'lens-main-s',title:'Cámara Principal 50 MP',desc:'Adaptive Pixel fusiona cuatro píxeles en uno para captar la máxima luz incluso de noche.',badge:'f/1.8 · OIS · PDAF'},
+    {cls:'lens-wide-s',title:'Ultra Gran Angular 12 MP',desc:'Campo de visión de 120°: más contexto, más creatividad.',badge:'f/2.2 · 120°'},
+    {cls:'lens-tele-s',title:'Teleobjetivo 10 MP',desc:'Zoom óptico 3×, Space Zoom hasta 30×. Siempre cerca, sin pérdida de calidad.',badge:'f/2.4 · 3× opt. · OIS'},
+  ],
+  tr:[
+    {cls:'lens-main-s',title:'50 MP Ana Kamera',desc:'Adaptive Pixel, maksimum ışık için gece bile dört pikseli tek piksele dönüştürür.',badge:'f/1.8 · OIS · PDAF'},
+    {cls:'lens-wide-s',title:'12 MP Ultra Geniş Açı',desc:'120° görüş alanı – daha fazla bağlam, daha fazla yaratıcılık.',badge:'f/2.2 · 120°'},
+    {cls:'lens-tele-s',title:'10 MP Telezoom',desc:'3× optik zum, 30× Space Zoom. Kalite kaybı olmadan her zaman yakın.',badge:'f/2.4 · 3× opt. · OIS'},
+  ]
+};
+
+// ── STATE ─────────────────────────────────────────────────
+let lang = 'de';
+
+function t(key){ return (T[lang]||T.de)[key]||key; }
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith({de:'🇩🇪',en:'🇬🇧',fr:'🇫🇷',es:'🇪🇸',tr:'🇹🇷'}[l]||'')));
+  document.querySelectorAll('[data-t]').forEach(el=>{ const k=el.getAttribute('data-t'); if(T[l]&&T[l][k]) el.textContent=T[l][k]; });
+  buildAppGrid();
+  buildFeatCards();
+  buildPricing();
+  buildColors();
+  buildSpecs();
+  buildCams();
+  buildMarquee();
+}
+
+// ── PARTICLES ─────────────────────────────────────────────
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+class P{constructor(){this.r()}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.rad=Math.random()*1.4+.3;this.vx=(Math.random()-.5)*.25;this.vy=-Math.random()*.35-.05;this.a=Math.random()*.4+.1;this.l=Math.random()}u(){this.x+=this.vx;this.y+=this.vy;this.l+=.0015;if(this.y<-5||this.l>1)this.r()}d(){ctx.beginPath();ctx.arc(this.x,this.y,this.rad,0,Math.PI*2);ctx.fillStyle=`rgba(74,158,255,${this.a*(1-this.l)})`;ctx.fill()}}
+for(let i=0;i<90;i++)pts.push(new P());
+(function loop(){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.u();p.d()});requestAnimationFrame(loop)})();
+
+// ── PHONE 3D TILT ─────────────────────────────────────────
+const pw=document.getElementById('phoneWrap');
+document.querySelector('.hero-right').addEventListener('mousemove',e=>{
+  const r=e.currentTarget.getBoundingClientRect();
+  const x=((e.clientX-r.left)/r.width-.5)*16;
+  const y=((e.clientY-r.top)/r.height-.5)*-16;
+  pw.style.animation='none';
+  pw.style.transform=`perspective(700px) rotateY(${x}deg) rotateX(${y}deg) translateY(-8px)`;
+});
+document.querySelector('.hero-right').addEventListener('mouseleave',()=>{pw.style.animation='';pw.style.transform=''});
+
+// ── BUILD APP GRID ─────────────────────────────────────────
+function buildAppGrid(){
+  const apps=(APPS[lang]||APPS.de);
+  const grid=document.getElementById('appGrid');
+  const dock=document.getElementById('dockGrid');
+  grid.innerHTML=''; dock.innerHTML='';
+  apps.slice(0,8).forEach((a,i)=>{
+    grid.appendChild(makeAppIcon(a,i));
+  });
+  apps.slice(8,12).forEach((a,i)=>{
+    dock.appendChild(makeAppIcon(a,i+8));
+  });
+}
+function makeAppIcon(a,i){
+  const d=document.createElement('div');
+  d.className='app-icon';
+  d.innerHTML=`<div class="app-face ${a.cls}">${a.emoji}</div><div class="app-label">${a.label}</div>`;
+  d.addEventListener('click',()=>openModal(a));
+  return d;
+}
+
+// ── MODAL ─────────────────────────────────────────────────
+function openModal(a){
+  document.getElementById('modalIcon').className='modal-icon '+a.cls;
+  document.getElementById('modalIcon').textContent=a.emoji;
+  document.getElementById('modalTitle').textContent=a.title;
+  document.getElementById('modalSubtitle').textContent=a.sub;
+  document.getElementById('modalDesc').textContent=a.desc;
+  document.getElementById('modalLink').textContent=t('modal_more');
+  document.getElementById('modalLink').onclick=()=>{
+    document.getElementById('modalOverlay').classList.remove('open');
+    const target=document.getElementById(a.section);
+    if(target)setTimeout(()=>target.scrollIntoView({behavior:'smooth'}),200);
+    return false;
+  };
+  const feats=document.getElementById('modalFeats');
+  feats.innerHTML='';
+  a.feats.forEach(f=>{
+    const el=document.createElement('div');
+    el.className='modal-feat';
+    el.innerHTML=`<div class="fi">✦</div>${f}`;
+    feats.appendChild(el);
+  });
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalDirect();});
+
+// ── MARQUEE ───────────────────────────────────────────────
+function buildMarquee(){
+  const items={de:['Galaxy S22','The Icon Reborn','50 MP Kamera','120Hz AMOLED','IP68','Snapdragon 8 Gen 1','8K Video','5G'],
+    en:['Galaxy S22','The Icon Reborn','50 MP Camera','120Hz AMOLED','IP68','Snapdragon 8 Gen 1','8K Video','5G'],
+    fr:['Galaxy S22','L\'Icône Réinventée','Caméra 50 MP','AMOLED 120Hz','IP68','Snapdragon 8 Gen 1','Vidéo 8K','5G'],
+    es:['Galaxy S22','El Icono Renacido','Cámara 50 MP','AMOLED 120Hz','IP68','Snapdragon 8 Gen 1','Video 8K','5G'],
+    tr:['Galaxy S22','Yeniden Doğan İkon','50 MP Kamera','120Hz AMOLED','IP68','Snapdragon 8 Gen 1','8K Video','5G']};
+  const arr=items[lang]||items.de;
+  const t=document.getElementById('marqueeTrack');
+  t.innerHTML=[...arr,...arr].map((s,i)=>`<span class="mi${i%2===1?' lit':''}">${i%2===1?'★':s}</span>`).join('');
+}
+
+// ── FEAT CARDS ────────────────────────────────────────────
+function buildFeatCards(){
+  const data=FEAT_DATA[lang]||FEAT_DATA.de;
+  const c=document.getElementById('featCards');
+  c.innerHTML='';
+  data.forEach((f,i)=>{
+    const el=document.createElement('div');
+    el.className='card'+(i===0?' open':'');
+    el.innerHTML=`<div class="card-top"><div class="card-num">${f.n}</div><h3 class="card-title">${f.t}</h3><div class="card-arrow">›</div></div><div class="card-body"><div class="card-inner"><div class="cdivider"></div><p>${f.d}</p><div class="spec-pills">${f.pills.map((p,pi)=>`<span class="sp${pi<2?' b':''}">${p}</span>`).join('')}</div></div></div>`;
+    el.addEventListener('click',()=>{const o=el.classList.contains('open');c.querySelectorAll('.card').forEach(x=>x.classList.remove('open'));if(!o)el.classList.add('open');});
+    c.appendChild(el);
+  });
+}
+
+// ── PRICING ───────────────────────────────────────────────
+function buildPricing(){
+  const data=PRICES[lang]||PRICES.de;
+  const g=document.getElementById('pricingGrid');
+  g.innerHTML='';
+  data.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='price-card'+(p.featured?' featured':'');
+    el.innerHTML=`<div class="price-badge">${p.badge}</div><div class="price-variant">${p.variant}</div><div class="price-storage">${p.storage}</div><div class="price-amount"><sup>€</sup>${p.price}</div><div class="price-period">${p.period}</div><div class="price-divider"></div><div class="price-features">${p.features.map(f=>`<div class="price-feature">${f}</div>`).join('')}</div>`;
+    g.appendChild(el);
+  });
+}
+
+// ── COLORS ────────────────────────────────────────────────
+function buildColors(){
+  const g=document.getElementById('colorGrid');
+  g.innerHTML='';
+  COLORS_DATA.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='color-card';
+    el.innerHTML=`<div class="color-swatch" style="background:${c.color}"></div><div class="color-name">${c.name[lang]||c.name.de}</div><div class="color-hex">${c.hex}</div>`;
+    g.appendChild(el);
+  });
+}
+
+// ── SPECS ─────────────────────────────────────────────────
+function buildSpecs(){
+  const data=SPECS_DATA[lang]||SPECS_DATA.de;
+  const g=document.getElementById('specsGrid');
+  g.innerHTML='';
+  data.forEach(s=>{
+    const el=document.createElement('div');
+    el.className='spec-box fade-up';
+    el.innerHTML=`<div class="spec-box-title">${s.t}</div>${s.rows.map(r=>`<div class="spec-row"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('')}`;
+    g.appendChild(el);
+    observer.observe(el);
+  });
+}
+
+// ── CAMERAS ───────────────────────────────────────────────
+function buildCams(){
+  const data=CAM_DATA[lang]||CAM_DATA.de;
+  const g=document.getElementById('camGrid');
+  g.innerHTML='';
+  data.forEach((c,i)=>{
+    const el=document.createElement('div');
+    el.className='cam-card fade-up';
+    if(i>0)el.classList.add('fd'+i);
+    el.innerHTML=`<div class="lens ${c.cls}"><div class="lens-outer ${c.cls}"><div class="lens-mid"><div class="lens-dot"></div></div></div></div><h3>${c.title}</h3><p>${c.desc}</p><span class="cam-badge">${c.badge}</span>`;
+    g.appendChild(el);
+    observer.observe(el);
+  });
+}
+
+// ── SCROLL OBSERVER ───────────────────────────────────────
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// ── INIT ──────────────────────────────────────────────────
+buildAppGrid();
+buildFeatCards();
+buildPricing();
+buildColors();
+buildSpecs();
+buildCams();
+buildMarquee();
+
+// Hero instantly visible
+document.querySelectorAll('.hero .fade-up').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),200+i*120));
+</script>
+</body>
+</html>
